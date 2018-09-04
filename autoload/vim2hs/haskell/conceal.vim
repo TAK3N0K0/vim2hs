@@ -69,6 +69,14 @@ function! vim2hs#haskell#conceal#wide() " {{{
     \ "\s||\_s"ms=s+1,me=e-1
     \ display conceal cchar=∨
 
+  syntax match hsStructure
+    \ "\<not\>"
+    \ display conceal cchar=¬
+
+  syntax match hsStructure
+    \ "\<pi\>"
+    \ display conceal cchar=π
+
   syntax match hsOperator
     \ "`intersect\%(ion\)\?`"
     \ display conceal cchar=∩
@@ -76,6 +84,26 @@ function! vim2hs#haskell#conceal#wide() " {{{
   syntax match hsOperator
     \ "`union`"
     \ display conceal cchar=∪
+
+  syntax match hsOperator
+    \ "`elem`"
+    \ display conceal cchar=∈
+
+  syntax match hsKeyword
+    \ "`notElem`"
+    \ display conceal cchar=∉
+
+  syntax match hsStructure
+    \ "()"
+    \ display conceal cchar=∅
+
+  syntax match hsStructure
+    \ '\s=>\s'ms=s+1,me=e-1
+    \ display conceal cchar=⇒
+
+  syntax match hsType
+    \ '\sforall\s'ms=s+1,me=e-1
+    \ display conceal cchar=∀
 endfunction " }}}
 
 
