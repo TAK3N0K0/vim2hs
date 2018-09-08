@@ -6,7 +6,7 @@ function! vim2hs#haskell#conceal#simple() " {{{
     \ display conceal cchar=λ
 
   syntax match hsOperator
-    \ "\(\_s\|\i\)\@<=\.\(\_s\|\i\)\@="
+    \ "\(\_s\)\@<=\.\(\_s\)\@="
     \ display conceal cchar=∘
 
   setlocal conceallevel=2
