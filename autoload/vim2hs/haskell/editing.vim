@@ -18,57 +18,105 @@ function! vim2hs#haskell#editing#indentexpr(lnum) " {{{
     let l:indent = match(l:line, '=')
 
   elseif l:line =~# '^data\>[^=]\+\|^class\>\|^instance\>'
-    if get(g:, "haskell_indent_double", 1)
-        let l:indent = &shiftwidth * 2
+    if get(g:, 'haskell_indent_double', 1)
+      let l:indent = &shiftwidth * 2
     else
-        let l:indent = &shiftwidth
+      let l:indent = &shiftwidth
     end
 
   elseif l:line =~# '^newtype\>.*=.\+'
     let l:indent = match(l:line, '=') + 2
 
   elseif l:line =~# '^\k\+.*=\s*\%(do\)\?$'
-    if get(g:, "haskell_indent_double", 1)
-        let l:indent = &shiftwidth * 2
+    if get(g:, 'haskell_indent_double', 1)
+      let l:indent = &shiftwidth * 2
     else
-        let l:indent = &shiftwidth
+      let l:indent = &shiftwidth
     end
 
   elseif l:line =~# '\[[^\]]*$'
-    let l:indent = match(l:line, '\[')
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\[')
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '{[^}]*$'
-    let l:indent = match(l:line, '{')
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '{')
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '([^)]*$'
-    let l:indent = match(l:line, '(')
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '(')
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<case\>.*\<of$'
-    let l:indent = match(l:line, '\<case\>') + &shiftwidth
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<case\>') + &shiftwidth
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<case\>.*\<of\>'
-    let l:indent = match(l:line, '\<of\>') + 3
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<of\>') + 3
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<if\>.*\<then\>.*\%(\<else\>\)\@!'
-    let l:indent = match(l:line, '\<then\>')
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<then\>')
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<if\>'
-    let l:indent = match(l:line, '\<if\>') + &shiftwidth
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<if\>') + &shiftwidth
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<\%(do\|let\|where\|in\|then\|else\)$'
-    let l:indent = indent(a:lnum - 1) + &shiftwidth
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<do\>'
-    let l:indent = match(l:line, '\<do\>') + 3
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<do\>') + 3
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<let\>.*\s=$'
-    let l:indent = match(l:line, '\<let\>') + 4 + &shiftwidth
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<let\>') + 4 + &shiftwidth
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<let\>'
-    let l:indent = match(l:line, '\<let\>') + 4
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<let\>') + 4
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\<where\>'
-    let l:indent = match(l:line, '\<where\>') + 6
+    if get(g:, 'haskell_indent_offside', 1)
+      let l:indent = match(l:line, '\<where\>') + 6
+    else
+      let l:indent = indent(a:lnum - 1) + &shiftwidth
+    end
 
   elseif l:line =~# '\s=$'
     let l:indent = indent(a:lnum - 1) + &shiftwidth
